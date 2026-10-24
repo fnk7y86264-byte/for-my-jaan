@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Jaan 🩷</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #050307;
+  color: white;
+  font-family: Georgia, serif;
+  overflow-x: hidden;
+  text-align: center;
+}
+#petals {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.petal {
+  position: absolute;
+  top: -30px;
+  color: #ff9edb;
+  text-shadow: 0 0 8px #ff69c9, 0 0 20px #ff1493;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+}
+.page {
+  display: none;
+  width: 100%;
+  max-width: 450px;
+  animation: appear 1s ease;
+}
+.page.active {
+  display: block;
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rose {
+  font-size: 55px;
+  filter: drop-shadow(0 0 15px #ff69c9);
+}
+h1 {
+  color: #ffb5e5;
+  font-size: 36px;
+  text-shadow: 0 0 15px #ff1493;
+}
+p {
+  color: #f3dce9;
+  font-size: 18px;
+  line-height: 1.9;
+}
+button {
+  border: 1px solid #ff80d0;
+  border-radius: 30px;
+  background: rgba(255, 20, 147, 0.12);
+  color: #ffd5ef;
+  padding: 13px 22px;
+  font-size: 16px;
+  margin-top: 20px;
+  box-shadow: 0 0 15px #ff149344;
+  cursor: pointer;
+}
+button:active {
+  transform: scale(0.96);
+}
+.arrow {
+  font-size: 24px;
+  margin-left: 8px;
+}
+.small {
+  font-size: 13px;
+  color: #c9a9bc;
+}
+</style>
+</head>
+<body>
+<div id="petals"></div>
+<main>
+<section class="page active" id="page1">
+  <div class="rose">🌹</div>
+  <p class="small">A LITTLE SOMETHING MADE JUST FOR YOU</p>
+  <h1>Happy Birthday, Jaan 🩷</h1>
+  <p>
+    To my Bubu, my Shona,<br>
+    and my favourite person in this world.
+  </p>
+  <p>I've made a little world just for you...</p>
+  <button onclick="nextPage(2)">
+    Open your surprise <span class="arrow">➜</span>
+  </button>
+</section>
+<section class="page" id="page2">
+  <div class="rose">💗</div>
+  <h1>My Jaan</h1>
+  <p>
+    If I could give you one thing in this world,
+    it would be the ability to see yourself through
+    my eyes. Then you'd understand how special
+    you truly are to me.
+  </p>
+  <p>
+    You make ordinary moments feel magical,
+    and your smile makes my world brighter.
+  </p>
+  <button onclick="nextPage(3)">
+    There's more, Shona <span class="arrow">➜</span>
+  </button>
+</section>
+<section class="page" id="page3">
+  <div class="rose">🌸</div>
+  <h1>Forever My Bubu</h1>
+  <p>
+    No matter how many birthdays come and go,
+    I hope I always get to remind you how loved
+    you are.
+  </p>
+  <p>
+    Thank you for being you.
+    Thank you for being in my life.
+    And thank you for making my heart so happy.
+  </p>
+  <p style="color:#ff9edb">
+    Happy Birthday, meri jaan. ❤️
+  </p>
+  <button onclick="nextPage(4)">
+    One last thing <span class="arrow">➜</span>
+  </button>
+</section>
+<section class="page" id="page4">
+  <div class="rose">💌</div>
+  <h1>Just You & Me</h1>
+  <p>
+    You're my favourite notification,
+    my happiest thought,
+    and the person I want to make
+    a thousand more memories with.
+  </p>
+  <p>
+    I love you, Jaan. 🩷
+  </p>
+  <p class="small">MADE WITH LOVE, JUST FOR YOU</p>
+  <button onclick="nextPage(1)">
+    Read it again ↻
+  </button>
+</section>
+</main>
+<audio id="song" loop>
+  <source src="Humdum.mp3" type="audio/mpeg">
+</audio>
+<button id="musicButton"
+style="position:fixed;z-index:5;bottom:18px;right:15px;margin:0"
+onclick="toggleMusic()">
+  ♫ Play our song
+</button>
+<script>
+function nextPage(number) {
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+  document.getElementById("page" + number).classList.add("active");
+}
+function createPetal() {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.textContent = Math.random() > 0.5 ? "🌸" : "✿";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.fontSize = (12 + Math.random() * 15) + "px";
+  const duration = 5 + Math.random() * 7;
+  petal.style.animationDuration = duration + "s";
+  document.getElementById("petals").appendChild(petal);
+  setTimeout(function() {
+    petal.remove();
+  }, duration * 1000);
+}
+setInterval(createPetal, 300);
+const song = document.getElementById("song");
+const musicButton = document.getElementById("musicButton");
+function toggleMusic() {
+  if (song.paused) {
+    song.play().then(function() {
+      musicButton.textContent = "♫ Pause our song";
+    }).catch(function() {
+      alert("Please make sure Humdum.mp3 is uploaded beside index.html.");
+    });
+  } else {
+    song.pause();
+    musicButton.textContent = "♫ Play our song";
+  }
+}
+</script>
+</body>
+</html>
